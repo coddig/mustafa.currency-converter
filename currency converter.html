@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evelyn Hone Currency Converter</title>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<style>
+    .body{
+        background-image: url(photo.png);
+        backdrop-filter: blur(10px);
+        background-size: contain;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .logo{
+        width: 70px;
+        margin-top: 2%;
+        margin-left: 93%;
+    }
+
+    .h1{
+        color: white;
+        text-align: center;
+        text-transform: capitalize;
+        
+    }
+    .h2{
+        display: inline-block;
+        margin: 7px;
+        color: white;
+        ;
+    }
+    .symbolselect{
+        padding: 4px 3px;
+        border-radius: 18px;
+    }
+    .div1{
+        margin: 7px;
+        display: inline-block;
+        color: white;
+    }
+    
+    
+    #chart{
+        width: 900px;
+        margin: 10px;
+    }
+    #exchangeRateChart{
+        width: 900px;
+        margin: 10px;
+    }
+    .cc{
+        margin: 7px;
+        color: white;
+    }
+    .to{
+        color: rgb(51, 255, 51);
+    }
+    .but{
+        width: 78px;
+        height: 35px;
+        border-radius: 20px;
+        background-color: rgb(51, 255, 51);
+        border: none;
+        color: black;
+        font-weight: bold;
+        transition: 1s;
+        margin-left: 5px;
+    }
+    .but:hover{
+        background: darkcyan;
+        border: 10;
+    }
+    .but:active{
+        background-color: white;
+    }
+    #result{
+        margin: 7px;
+        color: gold;
+        font-weight: bolder;
+    }
+    .legend{
+        color: gold;
+        font-family: gabriola;
+        font-size: 26px;
+    }
+    .pb{
+        color: white;
+    }
+    .fd{
+        color: white;
+        font-weight: bold;
+        font-family: monospace;
+        font-size: 16px;
+    }
+    .am{
+        padding: 5px 3px;
+        border-radius: 6px;
+        border: 1px solid;
+    }
+    .fc-tc{
+        height: 25px;
+        width: 53px;
+        border-radius: 6px;
+    }
+    .perf{
+        color: rgb(51, 255, 0);
+    }
+    
+</style>
+
+</head>
+<body class="body" >
+<h1 class="h1">Currency Converter</h1>
+
+<fieldset class="fd">
+    <legend class="legend"><span class="pb">Project by</span> Charles Mweendo</legend>
+    Welcome to Evelyn Hone College Currency Converter website that offers free live foreign exchange(forex) for Traders and people interested in crypo Currency
+</fieldset>
+
+<img class="logo" src="logo.png">
+
+<br>
+
+<div class="div1">
+    <label for="symbol">Select Market</label>
+    <select class="symbolselect" id="symbolSelect" onchange="fetchStockData()">
+        <option value="AAPL">AAPL (Apple Inc.)</option>
+        <option value="BTC-USD">BTC-USD (Bitcoin)</option>
+        <option value="MSFT">MSFT (Microsoft Corporation)</option>
+        <option value="GOOGL">GOOGL (Alphabet Inc.)</option>
+        <option value="AMZN">AMZN (Amazon.com Inc.)</option>
+        <option value="TSLA">TSLA (Tesla Inc.)</option>
+        <option value="FB">FB (Facebook Inc.)</option>
+        <option value="NVDA">NVDA (NVIDIA Corporation)</option>
+        <option value="JPM">JPM (JPMorgan Chase & Co.)</option>
+        <option value="BABA">BABA (Alibaba Group Holding Limited)</option>
+        <option value="BAC">BAC (Bank of America Corporation)</option>
+        <option value="NFLX">NFLX (Netflix Inc.)</option>
+        <option value="PYPL">PYPL (PayPal Holdings Inc.)</option>
+        <option value="DIS">DIS (The Walt Disney Company)</option>
+        <option value="SQ">SQ (Square Inc.)</option>
+        <option value="CRM">CRM (Salesforce.com Inc.)</option>
+        <option value="UBER">UBER (Uber Technologies Inc.)</option>
+        <option value="LYFT">LYFT (Lyft Inc.)</option>
+        <option value="INTC">INTC (Intel Corporation)</option>
+        <option value="WMT">WMT (Walmart Inc.)</option>
+        <option value="V">V (Visa Inc.)</option>
+    </select>
+</div>
+
+<br>
+
+<h2 class="h2">Recent Market <span class="perf">Performance</span> </h2>
+<div id="chart"></div>
+
+<br>
+<div div1>
+    <h2 class="cc">Convert Money</h2>
+    <label class="cc" for="amount">Amount:</label>
+    <input class="am" type="number" id="amount" min="0">
+    <select class="fc-tc" id="fromCurrency">
+        <option value="USD">USD (United States Dollar)</option>
+        <option value="EUR">EUR (Euro)</option>
+        <option value="GBP">GBP (British Pound Sterling)</option>
+        <option value="JPY">JPY (Japanese Yen)</option>
+        <option value="AUD">AUD (Australian Dollar)</option>
+        <option value="CAD">CAD (Canadian Dollar)</option>
+        <option value="CHF">CHF (Swiss Franc)</option>
+        <option value="CNY">CNY (Chinese Yuan)</option>
+        <option value="SEK">SEK (Swedish Krona)</option>
+        <option value="NZD">NZD (New Zealand Dollar)</option>
+        <option value="KRW">KRW (South Korean Won)</option>
+        <option value="SGD">SGD (Singapore Dollar)</option>
+        <option value="NOK">NOK (Norwegian Krone)</option>
+        <option value="MXN">MXN (Mexican Peso)</option>
+        <option value="INR">INR (Indian Rupee)</option>
+        <option value="RUB">RUB (Russian Ruble)</option>
+        <option value="HKD">HKD (Hong Kong Dollar)</option>
+        <option value="ZAR">ZAR (South African Rand)</option>
+        <option value="TRY">TRY (Turkish Lira)</option>
+        <option value="BRL">BRL (Brazilian Real)</option>
+        <option value="ZMW">ZMW(zambian Kwacha)</option>
+    </select>
+    <label for="toCurrency"><span class="to">To</span></label>
+    <select class="fc-tc" id="toCurrency">
+        <option value="USD">USD (United States Dollar)</option>
+        <option value="EUR">EUR (Euro)</option>
+        <option value="GBP">GBP (British Pound Sterling)</option>
+        <option value="JPY">JPY (Japanese Yen)</option>
+        <option value="AUD">AUD (Australian Dollar)</option>
+        <option value="CAD">CAD (Canadian Dollar)</option>
+        <option value="CHF">CHF (Swiss Franc)</option>
+        <option value="CNY">CNY (Chinese Yuan)</option>
+        <option value="SEK">SEK (Swedish Krona)</option>
+        <option value="NZD">NZD (New Zealand Dollar)</option>
+        <option value="KRW">KRW (South Korean Won)</option>
+        <option value="SGD">SGD (Singapore Dollar)</option>
+        <option value="NOK">NOK (Norwegian Krone)</option>
+        <option value="MXN">MXN (Mexican Peso)</option>
+        <option value="INR">INR (Indian Rupee)</option>
+        <option value="RUB">RUB (Russian Ruble)</option>
+        <option value="HKD">HKD (Hong Kong Dollar)</option>
+        <option value="ZAR">ZAR (South African Rand)</option>
+        <option value="TRY">TRY (Turkish Lira)</option>
+        <option value="BRL">BRL (Brazilian Real)</option>
+        <option value="ZMW">ZMW(zambian Kwacha)</option> 
+    </select>
+    <button class="but" onclick="convertCurrency()">Convert</button>
+    <p id="result"></p>
+</div>
+<br>
+
+<h2 class="cc">Exchange Rate Chart</h2>
+<div id="exchangeRateChart"></div>
+
+<script>
+
+function fetchStockData() {
+    const symbol = document.getElementById('symbolSelect').value;
+
+    fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=TOBL6Y92TBFWRS43`)
+        .then(response => response.json())
+        .then(data => {
+            const timeSeriesData = data['Time Series (Daily)'];
+            const dates = Object.keys(timeSeriesData).slice(0, 30).reverse();
+            const opens = dates.map(date => parseFloat(timeSeriesData[date]['1. open']));
+            const highs = dates.map(date => parseFloat(timeSeriesData[date]['2. high']));
+            const lows = dates.map(date => parseFloat(timeSeriesData[date]['3. low']));
+            const closes = dates.map(date => parseFloat(timeSeriesData[date]['4. close']));
+
+            const sma5 = calculateMovingAverage(closes, 5);
+            const sma20 = calculateMovingAverage(closes, 20);
+
+            const layout = {
+                title: `Candlestick Chart for ${symbol}`,
+                xaxis: {
+                    title: 'Date',
+                    type: 'category',
+                    categoryorder: 'category ascending',
+                    tickvals: dates,
+                    ticktext: dates
+                },
+                yaxis: {
+                    title: 'Price'
+                }
+            };
+
+            const trace1 = {
+                x: dates,
+                close: closes,
+                high: highs,
+                low: lows,
+                open: opens,
+                type: 'candlestick',
+                name: 'Candlestick'
+            };
+
+            const trace2 = {
+                x: dates,
+                y: sma5,
+                type: 'scatter',
+                mode: 'lines',
+                line: {
+                    color: 'blue',
+                    width: 2
+                },
+                name: 'Avarage 5'
+            };
+
+            const trace3 = {
+                x: dates,
+                y: sma20,
+                type: 'scatter',
+                mode: 'lines',
+                line: {
+                    color: 'red',
+                    width: 2
+                },
+                name: 'Avarage 20'
+            };
+
+            Plotly.newPlot('chart', [trace1, trace2, trace3], layout);
+        })
+        .catch(error => {
+            console.error('Error fetching stock data:', error);
+        });
+}
+
+function calculateMovingAverage(data, period) {
+    const movingAverages = [];
+    for (let i = 0; i < data.length - period + 1; i++) {
+        let sum = 0;
+        for (let j = i; j < i + period; j++) {
+            sum += data[j];
+        }
+        movingAverages.push(sum / period);
+    }
+    return movingAverages;
+}
+
+function convertCurrency() {
+    const amount = document.getElementById('amount').value;
+    const fromCurrency = document.getElementById('fromCurrency').value;
+    const toCurrency = document.getElementById('toCurrency').value;
+
+    fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`)
+        .then(response => response.json())
+        .then(data => {
+            const rate = data.rates[toCurrency];
+            const result = amount * rate;
+            document.getElementById('result').innerText = `${amount} ${fromCurrency} = ${result.toFixed(2)} ${toCurrency}`;
+        })
+        .catch(error => console.error('Error fetching exchange rate:', error));
+}
+
+function fetchExchangeRateData() {
+    fetch('https://api.exchangerate-api.com/v4/latest/USD')
+        .then(response => response.json())
+        .then(data => {
+            const currencies = Object.keys(data.rates);
+            const rates = Object.values(data.rates);
+
+            const layout = {
+                title: 'Exchange Rate Chart',
+                xaxis: {
+                    title: 'Currency',
+                    type: 'category',
+                    categoryorder: 'array',
+                    categoryarray: currencies
+                },
+                yaxis: {
+                    title: 'Exchange Rate'
+                }
+            };
+
+            const trace = {
+                x: currencies,
+                y: rates,
+                type: 'bar'
+            };
+
+            Plotly.newPlot('exchangeRateChart', [trace], layout);
+        })
+        .catch(error => console.error('Error fetching exchange rate data:', error));
+}
+
+fetchStockData();
+fetchExchangeRateData();
+
+setInterval(fetchStockData, 1000);
+</script>
+</body>
+</html>
